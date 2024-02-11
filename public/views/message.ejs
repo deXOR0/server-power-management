@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/bootstrap-icons.css" />
+        <script defer src="js/bootstrap.bundle.min.js"></script>
+
+        <style>
+            html,
+            body {
+                height: 100%;
+            }
+
+            .center-items {
+                display: flex;
+                height: 100%;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+        </style>
+
+        <title>Optiplex Power Management</title>
+    </head>
+    <body>
+        <div class="center-items">
+            <div class="container center-items">
+                <div class="row">
+                    <% if (type === 'shutdown') { %>
+                    <div class="col center-items">
+                        <img
+                            src="https://media1.tenor.com/m/r9rnJCst7hEAAAAC/cat-cats.gif"
+                            alt=""
+                            height="250"
+                            class="mb-5"
+                        />
+                        <h3>Shutting down Optiplex Server</h3>
+                    </div>
+                    <% } else if (type === 'suspend') { %>
+                    <div class="col center-items">
+                        <img
+                            src="https://media1.tenor.com/m/t4j2MWEZgSEAAAAd/kitten.gif"
+                            alt=""
+                            height="250"
+                            class="mb-5"
+                        />
+                        <h3>Suspending Optiplex Server</h3>
+                    </div>
+                    <% } else if (type === 'reboot') { %>
+                    <div class="col center-items">
+                        <img
+                            src="https://media1.tenor.com/m/6PoL2oau5zAAAAAd/cat-sleep-orange-cat.gif"
+                            alt=""
+                            height="250"
+                            class="mb-5"
+                        />
+                        <h3>Rebooting Optiplex Server</h3>
+                    </div>
+                    <% } %>
+                </div>
+                <a class="btn btn-primary mt-3" href="/" role="button">
+                    Back
+                </a>
+            </div>
+        </div>
+    </body>
+</html>
