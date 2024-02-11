@@ -33,7 +33,7 @@ router.post("/shutdown", (req, res) => {
 });
 
 router.post("/suspend", (req, res) => {
-    sudo.exec(["systemctl", "restart"], (err, pid, result) => {
+    sudo.exec(["systemctl", "suspend"], (err, pid, result) => {
         console.log(result);
     });
     res.redirect("/message?type=suspend");
