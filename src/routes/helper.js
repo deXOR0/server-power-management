@@ -4,9 +4,13 @@ const cron = require("node-cron");
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
 const sudo = require("sudo-js");
+const moment = require("moment-timezone");
 
 sudo.setPassword(process.env.SUDO_PASSWORD);
 dotenv.config();
+
+shutdown_timer = process.env.SHUTDOWN_TIMER_CRON;
+shutdown_delay = Number(process.env.SHUTDOWN_DELAY_MINUTES);
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -23,13 +27,14 @@ var mailOptions = {
     from: process.env.EMAIL_USER,
     to: process.env.DESTINATION_EMAIL_USER,
     subject: "[Optiplex Power Management] - Auto Shutdown Alert",
-    text: "This is an automated alert\nOptiplex Server will shutdown 30 minutes from now. If you wish to continue using the server, please click the Snooze button on http://power.local/",
+    text: `This is an automated alert\nOptiplex Server will shutdown ${shutdown_delay} minutes from now. If you wish to continue using the server, please click the Snooze button on http://power.local/`,
 };
 
 const shutDown = () => {
     let now = new Date();
-    now.setMinutes(now.getMinutes() + 30);
+    now.setMinutes(now.getMinutes() + shutdown_delay);
     now = new Date(now);
+    now = moment.tz(now, "Asia/Jakarta").format("HH:mm:ss");
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log(error);
@@ -54,7 +59,7 @@ const shutDown = () => {
             });
         }
         helper.rearm();
-    }, 1000 * 30 * 1);
+    }, 1000 * 60 * shutdown_delay);
 };
 
 const helper = {
@@ -115,7 +120,7 @@ const helper = {
     startCronJob() {
         console.log("Started Cron Job", Date());
         this.rearm();
-        cron.schedule("*/1 * * * *", () => {
+        cron.schedule(shutdown_timer, () => {
             shutDown();
         });
     },
