@@ -19,6 +19,8 @@
     "express-session": "^1.18.0",
     "mysql2": "^2.2.5",
     "nanoid": "^3.3.4",
+    "node-cron": "^3.0.3",
+    "nodemailer": "^6.9.13",
     "sequelize": "^6.6.2",
     "sudo-js": "^1.0.2",
     "yup": "^0.32.9"

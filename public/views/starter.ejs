@@ -129,6 +129,33 @@
                                 </form>
                             </div>
                         </div>
+                        <% if (shutDownDate) { %>
+                        <div
+                            class="row center-items mt-3"
+                            style="flex-direction: column"
+                        >
+                            Server is shutting down on <%= shutDownDate %>
+                            <form action="/api/disarm" method="post">
+                                <div class="center-items">
+                                    <input
+                                        type="hidden"
+                                        name="token"
+                                        value="<%- token %>"
+                                    />
+                                    <button
+                                        class="btn btn-info center-items mt-1"
+                                        style="width: 30%"
+                                        type="submit"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Reboot"
+                                    >
+                                        Snooze
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <% } %>
                     </div>
                 </div>
             </div>

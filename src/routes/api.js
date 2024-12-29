@@ -46,6 +46,12 @@ router.post("/reboot", (req, res) => {
     res.redirect("/message?type=reboot");
 });
 
+router.post("/disarm", (req, res) => {
+    helper.disarm();
+
+    res.redirect(req.originalUrl);
+});
+
 router.post("/example", async (req, res, next) => {
     const { name, age } = req.body;
     try {

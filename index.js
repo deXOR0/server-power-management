@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const flash = require("connect-flash");
 const app = express();
 const { helper } = require("./src/routes/helper");
+const fs = require("fs");
 
 // Uncoment 3 lines below to use database connection with sequelize
 // db.authenticate()
@@ -33,7 +34,17 @@ app.use("/api", require("./src/routes/api"));
 
 app.get("/", (req, res) => {
     const token = helper.generateToken();
-    res.render("starter", { token, messages: req.flash("messages") });
+    const config = JSON.parse(
+        fs.readFileSync(__dirname + "/src/routes/autoShutdown.json", {
+            encoding: "utf-8",
+            flag: "r",
+        })
+    );
+    res.render("starter", {
+        token,
+        shutDownDate: config.shutDownDate,
+        messages: req.flash("messages"),
+    });
 });
 
 app.get("/message", (req, res) => {
@@ -52,4 +63,5 @@ app.get("/message", (req, res) => {
 
 app.listen(process.env.PORT, () => {
     console.log(`App is listening on http://localhost:${process.env.PORT}`);
+    helper.startCronJob();
 });
